@@ -1,4 +1,8 @@
 defmodule ExTenant.TestRepo.Migrations.CreateTestSchemas do
+  @moduledoc """
+    a simple database schema consisting of tenants, posts and comments each witha a tenant FK
+  """
+
   use Ecto.Migration
 
   def change do
