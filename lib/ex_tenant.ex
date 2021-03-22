@@ -3,16 +3,6 @@ defmodule ExTenant do
   Documentation for `ExTenant`.
   """
 
-  @doc """
-  Hello world.
+  
 
-  ## Examples
-
-      iex> ExTenant.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
