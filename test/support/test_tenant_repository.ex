@@ -1,14 +1,11 @@
-defmodule ExTenant.Support.TenantRepo do
+defmodule ExTenant.Support.TestTenantRepository do
 
   alias ExTenant.Test.Support.{Tenant, Post, Comment, TestRepo}
 
   #----- functions that DO use the ex_tenant macros ------#
 
 
-
-  
-
-  #----- functions that DO NOT use the ex_tenant macros ------#
+  #----- TestRepo functions that DO NOT use the ex_tenant macros ------#
 
 
   def create_tenant(name) do

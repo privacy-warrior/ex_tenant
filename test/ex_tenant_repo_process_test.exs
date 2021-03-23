@@ -1,7 +1,7 @@
 defmodule ExTenantRepoProcessTest do
   use ExUnit.Case
 
-  alias ExTenant.Support.TenantRepo
+  alias ExTenant.Support.TestTenantRepository, as: TenantRepo
   alias ExTenant.Repo, as: Repo
   alias ExTenant.Test.Support.{Post, Comment}
 
