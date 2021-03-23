@@ -2,8 +2,8 @@ defmodule ExTenantRepoTest do
   use ExUnit.Case
 
   alias ExTenant.Support.TestTenantRepository, as: TenantRepo
-  alias ExTenant.Repo, as: Repo
-  alias ExTenant.Test.Support.{Tenant, Post, Comment}
+  alias ExTenant.Test.Support.TestRepo, as: Repo
+  alias ExTenant.Test.Support.Schemas.{Tenant, Post, Comment}
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")

@@ -1,4 +1,4 @@
-defmodule ExTenant.Test.Support.Tenant do
+defmodule ExTenant.Test.Support.Schemas.Tenant do
   use Ecto.Schema
   import Ecto.Changeset
   

@@ -1,4 +1,4 @@
-defmodule ExTenant.Builder do
+defmodule ExTenant.RepoBuilder do
   @moduledoc """
     by calling the `use` macro we should be able to inject all the required behaviour
     to allow us to handle multi-tenancy - most of it at least - apart from
@@ -18,7 +18,6 @@ defmodule ExTenant.Builder do
         |> cast(params, [:name, :body, :tenant_id])
       end 
   """
-  #require Logger
   
   defmacro __using__(opts) do
     config = Keyword.get(opts, :config)
@@ -31,7 +30,7 @@ defmodule ExTenant.Builder do
     IO.puts "\n\n Config schema: #{inspect tenant_schema}, field: #{inspect tenant_field}, key: #{inspect tenant_key} \n\n"
 
     quote do
-      import ExTenant.Builder
+      import ExTenant.RepoBuilder
       require Ecto.Query
       use Ecto.Repo, otp_app: unquote(application), adapter: unquote(database_adapter)
 
@@ -64,10 +63,8 @@ defmodule ExTenant.Builder do
       def prepare_query(operation, query, opts) do 
         cond do
           opts[:skip_tenant_id] || opts[:schema_migration] ->
-            IO.inspect opts
             {query, opts}
           tenant_id = opts[:tenant_id] ->
-            IO.puts tenant_id
             {Ecto.Query.where(query, tenant_id: ^tenant_id), opts}
           true ->
             raise ExTenant.TenantNotSetError
@@ -106,9 +103,6 @@ defmodule ExTenant.Builder do
   defmacro generate_default_options_callback() do
     quote do
       def default_options(_operation) do
-        
-        IO.inspect get_tenant_id()
-
         [tenant_id: get_tenant_id()]
       end  
     end

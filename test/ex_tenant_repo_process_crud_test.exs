@@ -5,8 +5,8 @@ defmodule ExTenantRepoProcessCrudTest do
   alias ExTenant.Repo, as: Repo
 
   setup do
-    {:ok, tenant} = TenantRepo.create_tenant("foo")
-    {:ok, bar_tenant} = TenantRepo.create_tenant("bar")
+    {:ok, tenant} = TenantRepo.create_tenant("foo", Repo)
+    {:ok, bar_tenant} = TenantRepo.create_tenant("bar", Repo)
     #
     # this normally would be handled by a plug in PHX..
     #
@@ -17,9 +17,9 @@ defmodule ExTenantRepoProcessCrudTest do
 
   describe "test the schema - comment crud" do
     test "creates a comment on a post" do
-      post = TenantRepo.create_post("test-p-name", "test-p-body")
-      created_comment = TenantRepo.create_comment("test-c-name", "test-c-body", post.id)
-      retrieved_commment = TenantRepo.get_comment(created_comment.id)
+      post = TenantRepo.create_post("test-p-name", "test-p-body", Repo)
+      created_comment = TenantRepo.create_comment("test-c-name", "test-c-body", post.id, Repo)
+      retrieved_commment = TenantRepo.get_comment(created_comment.id, Repo)
 
       assert retrieved_commment.id == created_comment.id
       assert retrieved_commment.name == created_comment.name
@@ -30,8 +30,8 @@ defmodule ExTenantRepoProcessCrudTest do
 
   describe "test the schema - post crud" do
     test "creates a post in the tenant" do
-      created_post = TenantRepo.create_post("test-post-name", "test-post-body")
-      retrieved_post = TenantRepo.get_post(created_post.id)
+      created_post = TenantRepo.create_post("test-post-name", "test-post-body", Repo)
+      retrieved_post = TenantRepo.get_post(created_post.id, Repo)
 
       assert retrieved_post.id == created_post.id
       assert retrieved_post.name == created_post.name

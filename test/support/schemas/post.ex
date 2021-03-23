@@ -1,16 +1,14 @@
-defmodule ExTenant.Test.Support.Post do
+defmodule ExTenant.Test.Support.Schemas.Post do
   use Ecto.Schema
   import Ecto.Changeset
-  #alias ExTenant.Repo
-  alias ExTenant.RepoUsingBuilder, as: Repo
 
   schema "posts" do
     field(:name, :string)
     field(:body, :string)
 
-    belongs_to(:tenant, ExTenant.Test.Support.Tenant, references: :tenant_id)
+    belongs_to(:tenant, ExTenant.Test.Support.Schemas.Tenant, references: :tenant_id)
 
-    has_many(:comments, ExTenant.Test.Support.Comment)
+    has_many(:comments, ExTenant.Test.Support.Schemas.Comment)
   end
 
   def changeset(params \\ :empty) do
@@ -18,9 +16,9 @@ defmodule ExTenant.Test.Support.Post do
     |> default_changeset()
   end
 
-  def changeset_with_tenant_id_from_process(params \\ :empty) do
+  def changeset_with_tenant_id_from_process(params, repo) do
     params 
-    |> Repo.inject_tenant_id()
+    |> repo.inject_tenant_id()
     |> default_changeset()
   end
 
