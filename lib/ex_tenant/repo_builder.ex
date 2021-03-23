@@ -21,13 +21,10 @@ defmodule ExTenant.RepoBuilder do
   
   defmacro __using__(opts) do
     config = Keyword.get(opts, :config)
-    tenant_schema = config[:schema]
-    tenant_field = config[:field]
+    tenanted_field = config[:tenanted_field]
     application = config[:otp_app]
     database_adapter = config[:adapter]
-    tenant_key = {__CALLER__.module, String.to_atom(tenant_field)}
-    
-    IO.puts "\n\n Config schema: #{inspect tenant_schema}, field: #{inspect tenant_field}, key: #{inspect tenant_key} \n\n"
+    tenant_key = {__CALLER__.module, String.to_atom(tenanted_field)}
 
     quote do
       import ExTenant.RepoBuilder
@@ -37,7 +34,7 @@ defmodule ExTenant.RepoBuilder do
       generate_put_tenant_function(unquote(tenant_key))
       generate_get_tenant_function(unquote(tenant_key))
       generate_default_options_callback()
-      generate_inject_tenant_id_callback(unquote(tenant_field))
+      generate_inject_tenant_id_callback(unquote(tenanted_field))
       generate_prepare_query_callback()
     end    
   end

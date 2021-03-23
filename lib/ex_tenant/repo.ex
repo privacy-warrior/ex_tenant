@@ -13,7 +13,6 @@ defmodule ExTenant.Repo do
   use ExTenant.RepoBuilder, config: [
     otp_app: :ex_tenant, 
     adapter: Ecto.Adapters.Postgres,
-    schema: "tenants", 
-    field: "tenant_id"
+    tenanted_field: "tenant_id"
   ]
 end
