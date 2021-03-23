@@ -7,6 +7,7 @@ defmodule ExTenantRepoProcessTest do
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")
+    {:ok, bar_tenant} = TenantRepo.create_tenant("bar")
 
     #
     # this normally would be handled by a plug in PHX..
@@ -16,7 +17,7 @@ defmodule ExTenantRepoProcessTest do
     {:ok, post} = TenantRepo.create_post("p1", "pb1", tenant.tenant_id)
     {:ok, comment} = TenantRepo.create_comment("c1", "cb1", post.id, tenant.tenant_id)
 
-    {:ok, post: post, comment: comment, tenant: tenant}
+    {:ok, post: post, comment: comment, tenant: tenant, bar_tenant: bar_tenant}
   end
 
   describe "test the schema - tenant_id is in the process" do
@@ -39,6 +40,12 @@ defmodule ExTenantRepoProcessTest do
       assert retrieved_comment.post_id == post.id
       assert retrieved_comment.tenant_id == comment.tenant_id
       assert retrieved_comment.tenant_id == tenant.tenant_id
-    end    
+    end
+
+    test "attempt to add a comment on tenant-a to a post on tenant-b - raises an exception", %{bar_tenant: bar_tenant, post: post} do
+      assert_raise Ecto.ConstraintError, fn ->
+        TenantRepo.create_comment("bar_c1", "bar_cb1", post.id, bar_tenant.tenant_id)
+      end
+    end  
   end
 end
