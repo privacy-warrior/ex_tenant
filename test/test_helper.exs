@@ -9,10 +9,10 @@ Mix.Task.run "ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Test
 ExTenant.Test.Support.Schemas.TestRepo.start_link
 
 # start the repo that uses ecto & multi-tenancy code
-ExTenant.Test.Support.TestRepo.start_link
+ExTenant.Test.Support.TestManualRepo.start_link
 
 # start the repo that uses ecto & multi-tenancy code - via the ExTenant macro
-ExTenant.Repo.start_link
+ExTenant.Test.Support.TestRepo.start_link
 
 ExUnit.start()
 
