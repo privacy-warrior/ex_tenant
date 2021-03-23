@@ -20,6 +20,10 @@ defmodule ExTenant.TestRepo.Migrations.CreateTestSchemas do
 
     create unique_index(:posts, [:id, :tenant_id])
 
+    #
+    # here we see an additional way of allowing postgres to use composite foreign
+    # keys to ensure a comment in one tenant cannot be added to a post in another tenant!
+    #    
     create table(:comments) do
       add :name, :string
       add :body, :string
