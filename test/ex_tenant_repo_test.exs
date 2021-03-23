@@ -7,17 +7,17 @@ defmodule ExTenantRepoTest do
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")
-    {:ok, post} = TenantRepo.create_post("p1", "pb1", tenant.id)
-    {:ok, comment} = TenantRepo.create_comment("c1", "cb1", post.id, tenant.id)
+    {:ok, post} = TenantRepo.create_post("p1", "pb1", tenant.tenant_id)
+    {:ok, comment} = TenantRepo.create_comment("c1", "cb1", post.id, tenant.tenant_id)
 
     {:ok, tenant: tenant, post: post, comment: comment}
   end
 
   describe "test the schema - by injecting the tenant_id" do
     test "get the post", %{post: post, tenant: tenant} do
-      retrieved_post = Repo.get(Post, post.id, tenant_id: tenant.id)
+      retrieved_post = Repo.get(Post, post.id, tenant_id: tenant.tenant_id)
       assert retrieved_post.id == post.id
-      assert retrieved_post.tenant_id == tenant.id
+      assert retrieved_post.tenant_id == tenant.tenant_id
     end
 
     test "attempts to get the post without the tenant_id", %{post: post} do
@@ -27,10 +27,10 @@ defmodule ExTenantRepoTest do
     end
 
     test "get the comment", %{comment: comment, post: post, tenant: tenant} do
-      retrieved_comment = Repo.get(Comment, comment.id, tenant_id: tenant.id)
+      retrieved_comment = Repo.get(Comment, comment.id, tenant_id: tenant.tenant_id)
       assert retrieved_comment.id == comment.id
       assert retrieved_comment.post_id == post.id
-      assert retrieved_comment.tenant_id == tenant.id
+      assert retrieved_comment.tenant_id == tenant.tenant_id
     end
 
     test "attempts to get the comment without the tenant_id", %{comment: comment} do
@@ -50,9 +50,9 @@ defmodule ExTenantRepoTest do
     end
 
     test "retrieves the tenant", %{tenant: tenant} do
-      retrieved_tenant = Repo.get(Tenant, tenant.id, skip_tenant_id: true)
+      retrieved_tenant = Repo.get(Tenant, tenant.tenant_id, skip_tenant_id: true)
 
-      assert retrieved_tenant.id == tenant.id
+      assert retrieved_tenant.tenant_id == tenant.tenant_id
       assert retrieved_tenant.name == tenant.name
     end
   end

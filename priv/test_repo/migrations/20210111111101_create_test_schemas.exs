@@ -6,7 +6,8 @@ defmodule ExTenant.TestRepo.Migrations.CreateTestSchemas do
   use Ecto.Migration
 
   def change do
-    create table(:tenants) do
+    create table(:tenants, primary_key: false) do
+      add :tenant_id, :bigserial, primary_key: true
       add :name, :string
     end
 
@@ -14,7 +15,7 @@ defmodule ExTenant.TestRepo.Migrations.CreateTestSchemas do
       add :name, :string
       add :body, :string
 
-      add :tenant_id, references(:tenants), null: false
+      add :tenant_id, references(:tenants, column: :tenant_id), null: false
     end
 
     create table(:comments) do
@@ -22,7 +23,7 @@ defmodule ExTenant.TestRepo.Migrations.CreateTestSchemas do
       add :body, :string
       add :post_id, references(:posts), null: false
 
-      add :tenant_id, references(:tenants), null: false
+      add :tenant_id, references(:tenants, column: :tenant_id), null: false
     end
   end
 end

@@ -5,8 +5,8 @@ defmodule ExTenantTest do
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")
-    {:ok, post} = TenantRepo.create_post("p1", "pb1", tenant.id)
-    {:ok, comment} = TenantRepo.create_comment("c1", "cb1", post.id, tenant.id)
+    {:ok, post} = TenantRepo.create_post("p1", "pb1", tenant.tenant_id)
+    {:ok, comment} = TenantRepo.create_comment("c1", "cb1", post.id, tenant.tenant_id)
 
     {:ok, tenant: tenant, post: post, comment: comment}
   end
@@ -17,11 +17,11 @@ defmodule ExTenantTest do
     end
 
     test "creates a post in the tenant", %{tenant: tenant, post: post} do
-      assert post.tenant_id == tenant.id
+      assert post.tenant_id == tenant.tenant_id
     end
 
     test "creates a comment on a post in the tenant", %{tenant: tenant, post: post, comment: comment} do
-      assert comment.tenant_id == tenant.id
+      assert comment.tenant_id == tenant.tenant_id
       assert comment.post_id == post.id
     end
   end
