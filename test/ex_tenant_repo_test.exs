@@ -49,11 +49,19 @@ defmodule ExTenantRepoTest do
       assert tenant_count > 0
     end
 
-    test "retrieves the tenant", %{tenant: tenant} do
+    test "retrieves the tenant when skip is set", %{tenant: tenant} do
       retrieved_tenant = Repo.get(Tenant, tenant.tenant_id, skip_tenant_id: true)
 
       assert retrieved_tenant.tenant_id == tenant.tenant_id
       assert retrieved_tenant.name == tenant.name
     end
+
+    test "retrieves the tenant - when skip is not set due to the new pkey", %{tenant: tenant} do
+      retrieved_tenant = Repo.get(Tenant, tenant.tenant_id, tenant_id: tenant.tenant_id)
+
+      assert retrieved_tenant.tenant_id == tenant.tenant_id
+      assert retrieved_tenant.name == tenant.name
+    end
+
   end
 end
