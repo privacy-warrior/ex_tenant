@@ -1,7 +1,8 @@
 defmodule ExTenant.Test.Support.Post do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExTenant.Repo
+  #alias ExTenant.Repo
+  alias ExTenant.RepoUsingBuilder, as: Repo
 
   schema "posts" do
     field(:name, :string)

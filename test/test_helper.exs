@@ -7,6 +7,7 @@ Mix.Task.run "ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.TestRepo"]
 
 ExTenant.Test.Support.TestRepo.start_link
 ExTenant.Repo.start_link
+ExTenant.RepoUsingBuilder.start_link
 
 ExUnit.start()
 
