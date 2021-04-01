@@ -1,0 +1,1 @@
+ex_doc "Ex_Tenant" "0.1.0" path/to/project/ebin -m "ExTenant" -u "https://github.com/elixir_garage/ex_tenant"

@@ -13,7 +13,7 @@ defmodule ExTenant.MixProject do
       package: package(),
       deps: deps(),
       # Documentation
-      name: "MyApp",
+      name: "ExTenant",
       source_url: project_url(),
       homepage_url: project_url(),
       docs: [
@@ -37,10 +37,7 @@ defmodule ExTenant.MixProject do
   defp description do
     """
     Foreign key based multi-tenancy, allowing all the tenanted data to live in the
-    same database. The tenant is injected into and retrieved from the process dictionary
-    by a Plug, and macros are used to inject the tenant_id into all the queries
-    and raise an exception if the tenant_id is missing. This process allows the 
-    developer to use the existing Ecto.Repo callbacks, and gets out of her way.
+    same database. 
     """
   end
 
