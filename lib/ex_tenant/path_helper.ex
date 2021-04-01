@@ -1,7 +1,7 @@
 defmodule ExTenant.PathHelper do
-  @migrations_folder Application.get_env(:ex_tenant, :migrations_folder) || "tenant_migrations"
+  @migrations_folder Application.get_env(:ex_tenant, :migrations_folder) || "tenanted_migrations"
 
-  def tenant_migrations_path(repo) do
+  def tenanted_migrations_path(repo) do
     Path.join(priv_path_for(repo), @migrations_folder)
   end
 

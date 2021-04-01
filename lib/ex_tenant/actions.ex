@@ -1,13 +1,8 @@
 defmodule ExTenant.Actions do
-  import Apartmentex.MigrationsPathBuilder
-  import Apartmentex.PrefixBuilder
-
-  alias Ecto.Adapters.SQL
-  alias Ecto.Adapters.Postgres
-  alias Ecto.Adapters.MySQL
+  import ExTenant.PathHelper
 
   @doc """
-  Apply migrations to a tenant with given strategy, in given direction.
+    Apply tenant migrations to a tenant with given strategy, in given direction.
 
   A direction can be given, as the third parameter, which defaults to `:up`
   A strategy can be given as an option, and defaults to `:all`
@@ -21,50 +16,28 @@ defmodule ExTenant.Actions do
       Can be any of `Logger.level/0` values or `false`.
 
   """
-  def migrate_tenant(repo, tenant, direction \\ :up, opts \\ []) do
+  def migrate_tenanted(repo, direction \\ :up, opts \\ []) do
     opts =
       if opts[:to] || opts[:step] || opts[:all],
         do: opts,
         else: Keyword.put(opts, :all, true)
 
-    migrate_and_return_status(repo, tenant, direction, opts)
+    migrate_and_return_status(repo, direction, opts)
   end
 
-  def new_tenant(repo, tenant) do
-    create_schema(repo, tenant)
-    migrate_tenant(repo, tenant)
-  end
+  # ------ private functions ------ #
 
-  def create_schema(repo, tenant) do
-    prefix = build_prefix(tenant)
-    case repo.__adapter__ do
-      Postgres -> SQL.query(repo, "CREATE SCHEMA \"#{prefix}\"", [])
-      MySQL    -> SQL.query(repo, "CREATE DATABASE #{prefix}", [])
-    end
-  end
-
-  def drop_tenant(repo, tenant) do
-    prefix = build_prefix(tenant)
-    case repo.__adapter__ do
-      Postgres -> SQL.query(repo, "DROP SCHEMA \"#{prefix}\" CASCADE", [])
-      MySQL    -> SQL.query(repo, "DROP DATABASE #{prefix}", [])
-    end
-  end
-
-  defp migrate_and_return_status(repo, tenant, direction, opts) do
-    prefix = build_prefix(tenant)
-
+  defp migrate_and_return_status(repo, direction, opts) do
     {status, versions} = handle_database_exceptions fn ->
-      opts_with_prefix = Keyword.put(opts, :prefix, prefix)
       Ecto.Migrator.run(
         repo,
-        tenant_migrations_path(repo),
+        tenanted_migrations_path(repo),
         direction,
-        opts_with_prefix
+        opts
       )
     end
 
-    {status, prefix, versions}
+    {status, versions}
   end
 
   defp handle_database_exceptions(fun) do
@@ -73,8 +46,8 @@ defmodule ExTenant.Actions do
     rescue
       e in Postgrex.Error ->
         {:error, Postgrex.Error.message(e)}
-      e in Mariaex.Error ->
-        {:error, Mariaex.Error.message(e)}
+      #e in Mariaex.Error ->
+      #  {:error, Mariaex.Error.message(e)}
     end
   end
 end
