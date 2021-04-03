@@ -1,5 +1,5 @@
 defmodule ExTenantRepoProcessPgCrudUsingBuilderTest do
-  use ExUnit.Case
+  use ExTenant.Postgres.DataCase
 
   alias ExTenant.Support.PgExTenantRepository, as: TenantRepo
   alias ExTenant.Test.Support.PgTestRepo, as: Repo

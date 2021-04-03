@@ -34,20 +34,10 @@ ExTenant.Test.Support.Schemas.Mysql.MyTestRepo.start_link()
 # start the repo that uses ecto & multi-tenancy code
 ExTenant.Test.Support.MyTestManualRepo.start_link()
 
+# start the repo that uses ecto & multi-tenancy code - via the ExTenant macro
+ExTenant.Test.Support.MyTestRepo.start_link()
 #
 # MY -------------------- DONE
 #
 
 ExUnit.start()
-
-Ecto.Adapters.SQL.Sandbox.mode(
-  ExTenant.Test.Support.Schemas.Postgres.PgTestRepo,
-  :auto
-  # {:shared, self()}
-)
-
-Ecto.Adapters.SQL.Sandbox.mode(
-  ExTenant.Test.Support.Schemas.Mysql.MyTestRepo,
-  :auto
-  # {:shared, self()}
-)

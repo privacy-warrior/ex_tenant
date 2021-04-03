@@ -55,14 +55,14 @@ config :ex_tenant, ExTenant.Test.Support.PgTestRepo,
 #
 config :ex_tenant, ExTenant.Test.Support.Schemas.Mysql.MyTestRepo,
   url: my_database_url,
-  adapter: Ecto.Adapters.Myxql,
+  adapter: Ecto.Adapters.MyXQL,
   pool: Ecto.Adapters.SQL.Sandbox
 
 #
 # PG: the repo used to create & test the db schemas using ex_tenant - the code that handles multi tenancy without a macro
 #
 config :ex_tenant, ExTenant.Test.Support.MyTestManualRepo,
-  url: pg_database_url,
+  url: my_database_url,
   adapter: Ecto.Adapters.MyXQL,
   pool: Ecto.Adapters.SQL.Sandbox
 
@@ -70,7 +70,7 @@ config :ex_tenant, ExTenant.Test.Support.MyTestManualRepo,
 # PG: the repo used to create & test the db schemas using ex_tenant - for testing the macro version
 #
 config :ex_tenant, ExTenant.Test.Support.MyTestRepo,
-  url: pg_database_url,
+  url: my_database_url,
   adapter: Ecto.Adapters.MyXQL,
   pool: Ecto.Adapters.SQL.Sandbox
 

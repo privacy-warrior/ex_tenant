@@ -28,6 +28,7 @@ ex_tenant-*.tar
 
 # this is the folder that would store the tenant-migrations we create in test
 /priv/pg_test_repo/tenant_migrations/
+/priv/my_test_repo/tenant_migrations/
 
 # environment variables should be excluded
 

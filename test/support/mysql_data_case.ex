@@ -12,7 +12,6 @@ defmodule ExTenant.Mysql.DataCase do
       Ecto.Adapters.SQL.Sandbox.mode(
         TestRepo,
         :auto
-        # {:shared, self()}
       )
     end
 

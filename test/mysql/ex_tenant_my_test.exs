@@ -1,7 +1,7 @@
-defmodule ExTenantPgTest do
-  use ExTenant.Postgres.DataCase
+defmodule ExTenantMyTest do
+  use ExTenant.Mysql.Tenanted.DataCase
 
-  alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
+  alias ExTenant.Support.MyTestTenantRepository, as: TenantRepo
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")
