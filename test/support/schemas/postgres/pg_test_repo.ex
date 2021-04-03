@@ -1,4 +1,4 @@
-defmodule ExTenant.Test.Support.Schemas.PgTestRepo do
+defmodule ExTenant.Test.Support.Schemas.Postgres.PgTestRepo do
   @moduledoc """
     we need to test the schema without any of our code
   """
