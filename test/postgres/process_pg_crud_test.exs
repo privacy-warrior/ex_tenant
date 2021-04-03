@@ -1,7 +1,7 @@
-defmodule ExTenantRepoProcessCrudTest do
+defmodule ExTenantRepoProcessPgCrudTest do
   use ExUnit.Case
 
-  alias ExTenant.Support.ExTenantRepository, as: TenantRepo
+  alias ExTenant.Support.PgExTenantRepository, as: TenantRepo
   alias ExTenant.Test.Support.PgTestRepo, as: Repo
 
   setup do

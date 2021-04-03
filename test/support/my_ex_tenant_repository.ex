@@ -1,5 +1,5 @@
-defmodule ExTenant.Support.ExTenantRepository do
-  alias ExTenant.Test.Support.Schemas.Postgres.{Tenant, Post, Comment}
+defmodule ExTenant.Support.MyExTenantRepository do
+  alias ExTenant.Test.Support.Schemas.Mysql.{Tenant, Post, Comment}
 
   # ----- functions that DO use the ex_tenant macros ------#
 

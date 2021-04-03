@@ -22,20 +22,14 @@ my_database_url =
   |> database_url_env.()
   |> String.replace("?", "#{Mix.env()}")
 
+# ---------- POSTGRES ---------- #
+
 #
 # PG: the repo used to create & test the db schemas without any of our code
 #
 config :ex_tenant, ExTenant.Test.Support.Schemas.Postgres.PgTestRepo,
   url: pg_database_url,
   adapter: Ecto.Adapters.Postgres,
-  pool: Ecto.Adapters.SQL.Sandbox
-
-#
-# MySQL: the repo used to create & test the db schemas without any of our code
-#
-config :ex_tenant, ExTenant.Test.Support.Schemas.Mysql.MyTestRepo,
-  url: my_database_url,
-  adapter: Ecto.Adapters.Myxql,
   pool: Ecto.Adapters.SQL.Sandbox
 
 #
@@ -52,6 +46,32 @@ config :ex_tenant, ExTenant.Test.Support.PgTestManualRepo,
 config :ex_tenant, ExTenant.Test.Support.PgTestRepo,
   url: pg_database_url,
   adapter: Ecto.Adapters.Postgres,
+  pool: Ecto.Adapters.SQL.Sandbox
+
+# ---------- MYSQL ---------- #
+
+#
+# MySQL: the repo used to create & test the db schemas without any of our code
+#
+config :ex_tenant, ExTenant.Test.Support.Schemas.Mysql.MyTestRepo,
+  url: my_database_url,
+  adapter: Ecto.Adapters.Myxql,
+  pool: Ecto.Adapters.SQL.Sandbox
+
+#
+# PG: the repo used to create & test the db schemas using ex_tenant - the code that handles multi tenancy without a macro
+#
+config :ex_tenant, ExTenant.Test.Support.MyTestManualRepo,
+  url: pg_database_url,
+  adapter: Ecto.Adapters.MyXQL,
+  pool: Ecto.Adapters.SQL.Sandbox
+
+#
+# PG: the repo used to create & test the db schemas using ex_tenant - for testing the macro version
+#
+config :ex_tenant, ExTenant.Test.Support.MyTestRepo,
+  url: pg_database_url,
+  adapter: Ecto.Adapters.MyXQL,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :logger, level: :warn

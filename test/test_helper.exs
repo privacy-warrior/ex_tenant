@@ -11,7 +11,7 @@ Mix.Task.run("ecto.create", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Mysql
 Mix.Task.run("ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Mysql.MyTestRepo"])
 
 #
-# PG --- START
+# PG -------------------- START
 #
 # start the repo that just uses Ecto
 ExTenant.Test.Support.Schemas.Postgres.PgTestRepo.start_link()
@@ -22,22 +22,32 @@ ExTenant.Test.Support.PgTestManualRepo.start_link()
 # start the repo that uses ecto & multi-tenancy code - via the ExTenant macro
 ExTenant.Test.Support.PgTestRepo.start_link()
 #
-# PG --- DONE
+# PG -------------------- DONE
 #
 
 #
-# MY --- START
+# MY -------------------- START
 #
 # start the repo that just uses Ecto
 ExTenant.Test.Support.Schemas.Mysql.MyTestRepo.start_link()
 
+# start the repo that uses ecto & multi-tenancy code
+ExTenant.Test.Support.MyTestManualRepo.start_link()
+
 #
-# MY --- DONE
+# MY -------------------- DONE
 #
 
 ExUnit.start()
 
 Ecto.Adapters.SQL.Sandbox.mode(
   ExTenant.Test.Support.Schemas.Postgres.PgTestRepo,
-  {:shared, self()}
+  :auto
+  # {:shared, self()}
+)
+
+Ecto.Adapters.SQL.Sandbox.mode(
+  ExTenant.Test.Support.Schemas.Mysql.MyTestRepo,
+  :auto
+  # {:shared, self()}
 )

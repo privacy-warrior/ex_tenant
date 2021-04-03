@@ -1,9 +1,9 @@
-defmodule ExTenantRepoTest do
+defmodule ExTenantRepoMyTest do
   use ExUnit.Case
 
-  alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.PgTestManualRepo, as: Repo
-  alias ExTenant.Test.Support.Schemas.Postgres.{Tenant, Post, Comment}
+  alias ExTenant.Support.MyTestTenantRepository, as: TenantRepo
+  alias ExTenant.Test.Support.MyTestManualRepo, as: Repo
+  alias ExTenant.Test.Support.Schemas.Mysql.{Tenant, Post, Comment}
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")

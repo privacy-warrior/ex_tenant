@@ -1,4 +1,4 @@
-defmodule ExTenantRepoProcessTest do
+defmodule ExTenantRepoPgProcessTest do
   use ExUnit.Case
 
   alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
