@@ -1,5 +1,5 @@
 defmodule ExTenant.Support.PgTestTenantRepository do
-  alias ExTenant.Test.Support.Schemas.{Tenant, Post, Comment}
+  alias ExTenant.Test.Support.Schemas.Postgres.{Tenant, Post, Comment}
   alias ExTenant.Test.Support.Schemas.PgTestRepo
 
   # ----- TestRepo functions that DO NOT use the ex_tenant macros ------#

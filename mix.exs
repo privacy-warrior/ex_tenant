@@ -17,7 +17,8 @@ defmodule ExTenant.MixProject do
       source_url: project_url(),
       homepage_url: project_url(),
       docs: [
-        main: "ExTenant", # The main page in the docs
+        # The main page in the docs
+        main: "ExTenant",
         extras: ["README.md"]
       ]
     ]
@@ -37,7 +38,7 @@ defmodule ExTenant.MixProject do
   defp description do
     """
     Foreign key based multi-tenancy, allowing all the tenanted data to live in the
-    same database. 
+    same database.
     """
   end
 
@@ -50,7 +51,7 @@ defmodule ExTenant.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]  
+  defp elixirc_paths(_), do: ["lib"]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
@@ -58,6 +59,7 @@ defmodule ExTenant.MixProject do
       {:ecto, "~> 3.5"},
       {:postgrex, "~> 0.15.8"},
       {:ecto_sql, "~> 3.5"},
+      {:myxql, "~> 0.4.0"},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false}
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

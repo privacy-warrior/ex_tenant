@@ -1,15 +1,14 @@
-
-defmodule ExTenant.Test.Support.Schemas.Comment do
+defmodule ExTenant.Test.Support.Schemas.Postgres.Comment do
   use Ecto.Schema
   import Ecto.Changeset
-  
+
   schema "comments" do
     field(:name, :string)
     field(:body, :string)
 
-    belongs_to(:tenant, ExTenant.Test.Support.Schemas.Tenant, references: :tenant_id)
+    belongs_to(:tenant, ExTenant.Test.Support.Schemas.Postgres.Tenant, references: :tenant_id)
 
-    belongs_to(:post, ExTenant.Test.Support.Schemas.Post)
+    belongs_to(:post, ExTenant.Test.Support.Schemas.Postgres.Post)
   end
 
   def changeset(params \\ :empty) do
@@ -18,7 +17,7 @@ defmodule ExTenant.Test.Support.Schemas.Comment do
   end
 
   def changeset_with_tenant_id_from_process(params, repo) do
-    params 
+    params
     |> repo.inject_tenant_id()
     |> default_changeset()
   end

@@ -3,7 +3,7 @@ defmodule ExTenantRepoTest do
 
   alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
   alias ExTenant.Test.Support.PgTestManualRepo, as: Repo
-  alias ExTenant.Test.Support.Schemas.{Tenant, Post, Comment}
+  alias ExTenant.Test.Support.Schemas.Postgres.{Tenant, Post, Comment}
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")
