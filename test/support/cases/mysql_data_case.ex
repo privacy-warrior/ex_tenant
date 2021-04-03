@@ -1,9 +1,9 @@
-defmodule ExTenant.Mysql.Tenanted.DataCase do
+defmodule ExTenant.Mysql.Cases.DataCase do
   @moduledoc """
   """
   use ExUnit.CaseTemplate
 
-  alias ExTenant.Test.Support.MyTestRepo, as: TestRepo
+  alias ExTenant.Test.Support.Schemas.Mysql.MyTestRepo, as: TestRepo
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(TestRepo)

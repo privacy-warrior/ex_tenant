@@ -17,10 +17,10 @@ Mix.Task.run("ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Mysq
 ExTenant.Test.Support.Schemas.Postgres.PgTestRepo.start_link()
 
 # start the repo that uses ecto & multi-tenancy code
-ExTenant.Test.Support.PgTestManualRepo.start_link()
+ExTenant.Test.Support.Repos.PgTestManualRepo.start_link()
 
 # start the repo that uses ecto & multi-tenancy code - via the ExTenant macro
-ExTenant.Test.Support.PgTestRepo.start_link()
+ExTenant.Test.Support.Repos.PgTestRepo.start_link()
 #
 # PG -------------------- DONE
 #
@@ -32,10 +32,10 @@ ExTenant.Test.Support.PgTestRepo.start_link()
 ExTenant.Test.Support.Schemas.Mysql.MyTestRepo.start_link()
 
 # start the repo that uses ecto & multi-tenancy code
-ExTenant.Test.Support.MyTestManualRepo.start_link()
+ExTenant.Test.Support.Repos.MyTestManualRepo.start_link()
 
 # start the repo that uses ecto & multi-tenancy code - via the ExTenant macro
-ExTenant.Test.Support.MyTestRepo.start_link()
+ExTenant.Test.Support.Repos.MyTestRepo.start_link()
 #
 # MY -------------------- DONE
 #

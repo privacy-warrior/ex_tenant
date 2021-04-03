@@ -1,4 +1,4 @@
-defmodule ExTenant.Test.Support.MyTestRepo do
+defmodule ExTenant.Test.Support.Repos.PgTestRepo do
   @moduledoc """
     testing the `use` macro to ensure we create a properly functional repo
 
@@ -13,7 +13,7 @@ defmodule ExTenant.Test.Support.MyTestRepo do
   use ExTenant,
     config: [
       otp_app: :ex_tenant,
-      adapter: Ecto.Adapters.MyXQL,
+      adapter: Ecto.Adapters.Postgres,
       tenanted_field: "tenant_id"
     ]
 end

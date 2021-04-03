@@ -1,9 +1,9 @@
-defmodule ExTenant.Test.Support.PgTestManualRepo do
+defmodule ExTenant.Test.Support.Repos.MyTestManualRepo do
   @moduledoc """
     before we transition to a macro - we need to work the repo functions manually
   """
 
-  use Ecto.Repo, otp_app: :ex_tenant, adapter: Ecto.Adapters.Postgres
+  use Ecto.Repo, otp_app: :ex_tenant, adapter: Ecto.Adapters.MyXQL
   require Ecto.Query
   require Logger
 

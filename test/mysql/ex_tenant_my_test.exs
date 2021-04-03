@@ -1,5 +1,5 @@
 defmodule ExTenantMyTest do
-  use ExTenant.Mysql.Tenanted.DataCase
+  use ExTenant.Mysql.Tenanted.Cases.DataCase
 
   alias ExTenant.Support.MyTestTenantRepository, as: TenantRepo
 

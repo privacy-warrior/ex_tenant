@@ -1,9 +1,8 @@
 defmodule ExTenantRepoPgProcessTest do
-  # use ExUnit.Case
-  use ExTenant.Postgres.Tenanted.DataCase
+  use ExTenant.Postgres.Tenanted.Cases.DataCase
 
   alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.PgTestManualRepo, as: Repo
+  alias ExTenant.Test.Support.Repos.PgTestManualRepo, as: Repo
   alias ExTenant.Test.Support.Schemas.Postgres.{Post, Comment}
 
   setup do

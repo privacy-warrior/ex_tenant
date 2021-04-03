@@ -1,8 +1,8 @@
 defmodule ExTenantRepoProcessPgCrudTest do
-  use ExTenant.Postgres.DataCase
+  use ExTenant.Postgres.Cases.DataCase
 
   alias ExTenant.Support.PgExTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.PgTestRepo, as: Repo
+  alias ExTenant.Test.Support.Repos.PgTestRepo, as: Repo
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo", Repo)

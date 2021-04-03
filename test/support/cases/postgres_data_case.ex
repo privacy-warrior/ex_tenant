@@ -1,9 +1,9 @@
-defmodule ExTenant.Postgres.Tenanted.DataCase do
+defmodule ExTenant.Postgres.Cases.DataCase do
   @moduledoc """
   """
   use ExUnit.CaseTemplate
 
-  alias ExTenant.Test.Support.PgTestRepo, as: TestRepo
+  alias ExTenant.Test.Support.Schemas.Postgres.PgTestRepo, as: TestRepo
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(TestRepo)

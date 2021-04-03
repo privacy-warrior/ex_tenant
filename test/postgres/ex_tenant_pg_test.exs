@@ -1,5 +1,5 @@
 defmodule ExTenantPgTest do
-  use ExTenant.Postgres.DataCase
+  use ExTenant.Postgres.Cases.DataCase
 
   alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
 

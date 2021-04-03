@@ -1,8 +1,8 @@
 defmodule ExTenantRepoProcessMyCrudUsingBuilderTest do
-  use ExTenant.Mysql.DataCase
+  use ExTenant.Mysql.Cases.DataCase
 
   alias ExTenant.Support.MyExTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.MyTestRepo, as: Repo
+  alias ExTenant.Test.Support.Repos.MyTestRepo, as: Repo
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo", Repo)
