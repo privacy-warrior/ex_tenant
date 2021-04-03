@@ -2,7 +2,7 @@ defmodule ExTenantRepoProcessCrudUsingBuilderTest do
   use ExUnit.Case
 
   alias ExTenant.Support.ExTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.TestRepo, as: Repo
+  alias ExTenant.Test.Support.PgTestRepo, as: Repo
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo", Repo)
@@ -18,7 +18,7 @@ defmodule ExTenantRepoProcessCrudUsingBuilderTest do
   describe "test the schema - comment crud" do
     test "creates a comment on a post" do
       post = TenantRepo.create_post("test-p-name", "test-p-body", Repo)
-      
+
       created_comment = TenantRepo.create_comment("test-c-name", "test-c-body", post.id, Repo)
       retrieved_commment = TenantRepo.get_comment(created_comment.id, Repo)
 

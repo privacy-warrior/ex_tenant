@@ -1,8 +1,8 @@
 defmodule ExTenantRepoTest do
   use ExUnit.Case
 
-  alias ExTenant.Support.TestTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.TestManualRepo, as: Repo
+  alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
+  alias ExTenant.Test.Support.PgTestManualRepo, as: Repo
   alias ExTenant.Test.Support.Schemas.{Tenant, Post, Comment}
 
   setup do
@@ -23,7 +23,7 @@ defmodule ExTenantRepoTest do
     test "attempts to get the post without the tenant_id", %{post: post} do
       assert_raise ExTenant.TenantNotSetError, fn ->
         Repo.get(Post, post.id)
-      end      
+      end
     end
 
     test "get the comment", %{comment: comment, post: post, tenant: tenant} do
@@ -36,15 +36,16 @@ defmodule ExTenantRepoTest do
     test "attempts to get the comment without the tenant_id", %{comment: comment} do
       assert_raise ExTenant.TenantNotSetError, fn ->
         Repo.get(Comment, comment.id)
-      end      
+      end
     end
   end
 
   describe "test the schema - getting tenants by skipping the tenant_id" do
     test "retrieves all tenants" do
-      tenant_count = Tenant
-      |> Repo.all(skip_tenant_id: true) 
-      |> Enum.count()
+      tenant_count =
+        Tenant
+        |> Repo.all(skip_tenant_id: true)
+        |> Enum.count()
 
       assert tenant_count > 0
     end
@@ -62,6 +63,5 @@ defmodule ExTenantRepoTest do
       assert retrieved_tenant.tenant_id == tenant.tenant_id
       assert retrieved_tenant.name == tenant.name
     end
-
   end
 end

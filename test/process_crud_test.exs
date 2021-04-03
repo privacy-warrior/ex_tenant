@@ -2,7 +2,7 @@ defmodule ExTenantRepoProcessCrudTest do
   use ExUnit.Case
 
   alias ExTenant.Support.ExTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.TestRepo, as: Repo
+  alias ExTenant.Test.Support.PgTestRepo, as: Repo
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo", Repo)

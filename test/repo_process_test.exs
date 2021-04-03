@@ -1,8 +1,8 @@
 defmodule ExTenantRepoProcessTest do
   use ExUnit.Case
 
-  alias ExTenant.Support.TestTenantRepository, as: TenantRepo
-  alias ExTenant.Test.Support.TestManualRepo, as: Repo
+  alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
+  alias ExTenant.Test.Support.PgTestManualRepo, as: Repo
   alias ExTenant.Test.Support.Schemas.{Post, Comment}
 
   setup do
@@ -27,14 +27,21 @@ defmodule ExTenantRepoProcessTest do
       assert retrieved_post.tenant_id == tenant.tenant_id
     end
 
-    test "get the post - will also check the tenant_id in the process", %{post: post, tenant: tenant} do
+    test "get the post - will also check the tenant_id in the process", %{
+      post: post,
+      tenant: tenant
+    } do
       retrieved_post = Repo.get(Post, post.id)
       assert retrieved_post.id == post.id
       assert retrieved_post.tenant_id == post.tenant_id
       assert retrieved_post.tenant_id == tenant.tenant_id
     end
 
-    test "get the comment - will also check the tenant_id in the process", %{comment: comment, post: post, tenant: tenant} do
+    test "get the comment - will also check the tenant_id in the process", %{
+      comment: comment,
+      post: post,
+      tenant: tenant
+    } do
       retrieved_comment = Repo.get(Comment, comment.id)
       assert retrieved_comment.id == comment.id
       assert retrieved_comment.post_id == post.id
@@ -42,10 +49,13 @@ defmodule ExTenantRepoProcessTest do
       assert retrieved_comment.tenant_id == tenant.tenant_id
     end
 
-    test "attempt to add a comment on tenant-a to a post on tenant-b - raises an exception", %{bar_tenant: bar_tenant, post: post} do
+    test "attempt to add a comment on tenant-a to a post on tenant-b - raises an exception", %{
+      bar_tenant: bar_tenant,
+      post: post
+    } do
       assert_raise Ecto.ConstraintError, fn ->
         TenantRepo.create_comment("bar_c1", "bar_cb1", post.id, bar_tenant.tenant_id)
       end
-    end  
+    end
   end
 end

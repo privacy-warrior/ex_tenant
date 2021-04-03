@@ -1,7 +1,7 @@
 defmodule ExTenantTest do
   use ExUnit.Case
 
-  alias ExTenant.Support.TestTenantRepository, as: TenantRepo
+  alias ExTenant.Support.PgTestTenantRepository, as: TenantRepo
 
   setup do
     {:ok, tenant} = TenantRepo.create_tenant("foo")
@@ -20,7 +20,11 @@ defmodule ExTenantTest do
       assert post.tenant_id == tenant.tenant_id
     end
 
-    test "creates a comment on a post in the tenant", %{tenant: tenant, post: post, comment: comment} do
+    test "creates a comment on a post in the tenant", %{
+      tenant: tenant,
+      post: post,
+      comment: comment
+    } do
       assert comment.tenant_id == tenant.tenant_id
       assert comment.post_id == post.id
     end

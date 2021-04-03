@@ -1,4 +1,4 @@
-defmodule ExTenant.Test.Support.TestRepo do
+defmodule ExTenant.Test.Support.PgTestRepo do
   @moduledoc """
     testing the `use` macro to ensure we create a properly functional repo
 
@@ -9,10 +9,11 @@ defmodule ExTenant.Test.Support.TestRepo do
 
     TestRepo.inject_tenant_id(%{"name" => "Joe"})
   """
-  
-  use ExTenant, config: [
-    otp_app: :ex_tenant, 
-    adapter: Ecto.Adapters.Postgres,
-    tenanted_field: "tenant_id"
-  ]
+
+  use ExTenant,
+    config: [
+      otp_app: :ex_tenant,
+      adapter: Ecto.Adapters.Postgres,
+      tenanted_field: "tenant_id"
+    ]
 end
