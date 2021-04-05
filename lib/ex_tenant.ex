@@ -1,16 +1,20 @@
 defmodule ExTenant do
   @moduledoc """
-    by calling the `use` macro we should be able to inject all the required behaviour
-    to allow us to handle multi-tenancy.
+    Call the `use ExTenant` macro to inject all the required behaviour into your
+    Application Repo module to enable all multi-tenancy functions.
+
+    ###
 
     In your application `Repo` file call the `use` macro as per this example
 
-    use ExTenant,
-      config: [
-        otp_app: :name_of_your_elixir_phoenix_app,
-        adapter: Ecto.Adapters.Postgres,
-        tenanted_field: "tenant_id"
-      ]
+      def YourApplication.Repo do
+        use ExTenant,
+          config: [
+            otp_app: :name_of_your_elixir_phoenix_app_as_atom,
+            adapter: Ecto.Adapters.Postgres,
+            tenanted_field: "tenant_id"
+          ]
+      end
 
     In order to get the `tenant_id` into the progress dictionary in Phoenix
     we recommend to use a plug - there you should retrieve the `tenant name`
@@ -27,21 +31,25 @@ defmodule ExTenant do
     From here all your Repo callbacks (Repo.get/Repo.one/Repo.all etc) will
     have a where clause applied to them with the `tenant_id` injected into the clause.
 
-    In order to set the `tenant_id` on `insert` and `update` functions do this:
+    In order to set the `tenant_id` on `insert` and `update` functions the tenant_id
+    needs to be inserted into the attributes to be inserted. The `inject_tenant_id`
+    function that is now available on the `Repo` can be used to do this.
 
-      def changeset(params \\ :empty) do
-        params
+      def changeset(attrs \\ :empty) do
+        attrs
         |> Repo.inject_tenant_id()
         |> default_changeset()
       end
 
-      defp default_changeset(params) do
+      defp default_changeset(attrs) do
         %__MODULE__{}
         |> cast(params, [:field1, :field1, :tenant_id])
       end
 
     NB: If the `tenant_id` is not set in the changeset, Repo.insert/update callbacks
     will raise a `Postgrex.Error` (not_null_violation)
+
+  ### Migrations
 
   """
 
