@@ -1,20 +1,23 @@
 # ExTenant
 
-**TODO: Add description**
+## Multi Tenancy Library - based on foreign key relationship
+
+## Features for Querying the database
+
+- Overrides the Ecto callback `default_options` to inject the `tenant_id`
+- Overrides the Ecto callback `prepare_query` to inject the `tenant_id` into a where clause
+
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_tenant` to your list of dependencies in `mix.exs`:
+- The package can be installed by adding `ex_tenant` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:ex_tenant, "~> 0.1.0"}
+    {:ex_tenant, "~> 0.1.1"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_tenant](https://hexdocs.pm/ex_tenant).
+- Run: `mix deps.get && mix deps.compile` to retrieve dependencies & compile
