@@ -8,7 +8,7 @@ defmodule ExTenant.PathHelper do
   @doc """
     ## Parameters
 
-      - *repo*: the repository th retrieve the path for
+      - *repo* : the repository th retrieve the path for
 
   """
   def tenanted_migrations_path(repo) do

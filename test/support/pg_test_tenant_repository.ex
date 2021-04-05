@@ -16,6 +16,12 @@ defmodule ExTenant.Support.PgTestTenantRepository do
     |> PgTestRepo.insert()
   end
 
+  def create_post_without_tenant_id(name, body) do
+    %{"name" => name, "body" => body}
+    |> Post.changeset_without_tenant_id()
+    |> PgTestRepo.insert()
+  end
+
   def create_comment(name, body, post_id, tenant_id) do
     %{"name" => name, "body" => body, "post_id" => post_id, "tenant_id" => tenant_id}
     |> Comment.changeset()

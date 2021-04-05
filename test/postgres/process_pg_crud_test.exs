@@ -2,6 +2,7 @@ defmodule ExTenantRepoProcessPgCrudTest do
   use ExTenant.Postgres.Cases.DataCase
 
   alias ExTenant.Support.PgExTenantRepository, as: TenantRepo
+  alias ExTenant.Support.PgTestTenantRepository, as: TenantRepoWithoutTenantId
   alias ExTenant.Test.Support.Repos.PgTestRepo, as: Repo
 
   setup do
@@ -25,6 +26,15 @@ defmodule ExTenantRepoProcessPgCrudTest do
       assert retrieved_commment.name == created_comment.name
       assert retrieved_commment.post_id == created_comment.post_id
       assert retrieved_commment.tenant_id == created_comment.tenant_id
+    end
+
+    test "fails to create a post - when the tenant_id is not injected" do
+      assert_raise Postgrex.Error, fn ->
+        TenantRepoWithoutTenantId.create_post_without_tenant_id(
+          "test-p-name",
+          "test-p-body"
+        )
+      end
     end
   end
 
