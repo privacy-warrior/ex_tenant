@@ -1,4 +1,7 @@
 defmodule ExTenant.Actions do
+  @moduledoc """
+    Run the tenanted migrations
+  """
   import ExTenant.PathHelper
 
   @doc """
@@ -6,6 +9,11 @@ defmodule ExTenant.Actions do
 
   A direction can be given, as the third parameter, which defaults to `:up`
   A strategy can be given as an option, and defaults to `:all`
+
+  ## Paramaters
+
+    - *repo*: the repository we are running the migrations for
+    - *direction*: defaults to `:up`
 
   ## Options
 
@@ -28,14 +36,15 @@ defmodule ExTenant.Actions do
   # ------ private functions ------ #
 
   defp migrate_and_return_status(repo, direction, opts) do
-    {status, versions} = handle_database_exceptions fn ->
-      Ecto.Migrator.run(
-        repo,
-        tenanted_migrations_path(repo),
-        direction,
-        opts
-      )
-    end
+    {status, versions} =
+      handle_database_exceptions(fn ->
+        Ecto.Migrator.run(
+          repo,
+          tenanted_migrations_path(repo),
+          direction,
+          opts
+        )
+      end)
 
     {status, versions}
   end
@@ -46,8 +55,8 @@ defmodule ExTenant.Actions do
     rescue
       e in Postgrex.Error ->
         {:error, Postgrex.Error.message(e)}
-      #e in Mariaex.Error ->
-      #  {:error, Mariaex.Error.message(e)}
+        # e in Mariaex.Error ->
+        #  {:error, Mariaex.Error.message(e)}
     end
   end
 end
