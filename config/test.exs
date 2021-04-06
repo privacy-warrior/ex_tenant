@@ -74,4 +74,11 @@ config :ex_tenant, ExTenant.Test.Support.Repos.MyTestRepo,
   adapter: Ecto.Adapters.MyXQL,
   pool: Ecto.Adapters.SQL.Sandbox
 
+#
+# TODO add this into the DOCU - i.e. the config of the Repo!
+#
+# AND we also need to doc and fix the `tenanted_field` from here!
+#
+config :ex_tenant, tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo
+
 config :logger, level: :warn

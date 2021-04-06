@@ -16,6 +16,17 @@ defmodule ExTenant.Support.PgExTenantRepository do
     created_post
   end
 
+  def create_post_with_cast(name, body, repo) do
+    attrs = %{"name" => name, "body" => body}
+
+    {:ok, created_post} =
+      attrs
+      |> Post.default_changeset_with_cast_tenant_id()
+      |> repo.insert()
+
+    created_post
+  end
+
   def create_post_without_cast(name, body, repo) do
     attrs = %{"name" => name, "body" => body}
 

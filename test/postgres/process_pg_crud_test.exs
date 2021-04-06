@@ -54,4 +54,15 @@ defmodule ExTenantRepoProcessPgCrudTest do
       assert retrieved_post.tenant_id == created_post.tenant_id
     end
   end
+
+  describe "test the schema - post crud with using cast_tenanted macro" do
+    test "creates a post in the tenant" do
+      created_post = TenantRepo.create_post_with_cast("test-post-name", "test-post-body", Repo)
+      retrieved_post = TenantRepo.get_post(created_post.id, Repo)
+
+      assert retrieved_post.id == created_post.id
+      assert retrieved_post.name == created_post.name
+      assert retrieved_post.tenant_id == created_post.tenant_id
+    end
+  end
 end

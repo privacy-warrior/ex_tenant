@@ -1,7 +1,6 @@
 defmodule ExTenant.Test.Support.Schemas.Postgres.Post do
   use ExTenant.Schema
-
-  import Ecto.Changeset
+  use ExTenant.Changeset
 
   tenanted_schema "posts" do
     field(:name, :string)
@@ -42,5 +41,10 @@ defmodule ExTenant.Test.Support.Schemas.Postgres.Post do
   defp default_changeset_without_tenant_id(params) do
     %__MODULE__{}
     |> cast(params, [:name, :body])
+  end
+
+  def default_changeset_with_cast_tenant_id(params) do
+    %__MODULE__{}
+    |> cast_tenanted(params, [:name, :body])
   end
 end
