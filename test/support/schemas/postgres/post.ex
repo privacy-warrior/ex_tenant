@@ -1,12 +1,13 @@
 defmodule ExTenant.Test.Support.Schemas.Postgres.Post do
-  use Ecto.Schema
+  use ExTenant.Schema
+
   import Ecto.Changeset
 
-  schema "posts" do
+  tenanted_schema "posts" do
     field(:name, :string)
     field(:body, :string)
 
-    belongs_to(:tenant, ExTenant.Test.Support.Schemas.Postgres.Tenant, references: :tenant_id)
+    tenanted()
 
     has_many(:comments, ExTenant.Test.Support.Schemas.Postgres.Comment)
   end
