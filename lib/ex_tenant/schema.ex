@@ -97,16 +97,15 @@ defmodule ExTenant.Schema do
   end
 
   defp raise_if_tenanted_association_not_exists?(calls) do
-    tenanted_association =
-      calls
-      |> Enum.filter(fn n ->
-        key = elem(n, 0)
-        key == :tenanted
-      end)
-      |> List.first()
-
-    if tenanted_association == nil do
-      raise ExTenant.TenantNotCalledInSchemaError
-    end
+    calls
+    |> Enum.filter(fn n ->
+      key = elem(n, 0)
+      key == :tenanted
+    end)
+    |> List.first()
+    |> raise_error()
   end
+
+  defp raise_error(nil), do: raise(ExTenant.TenantNotCalledInSchemaError)
+  defp raise_error(_), do: :ok
 end
