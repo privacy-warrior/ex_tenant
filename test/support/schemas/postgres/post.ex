@@ -27,6 +27,12 @@ defmodule ExTenant.Test.Support.Schemas.Postgres.Post do
     |> default_changeset()
   end
 
+  def changeset_with_tenant_id_from_process_but_not_cast(params, repo) do
+    params
+    |> repo.inject_tenant_id()
+    |> default_changeset_without_tenant_id()
+  end
+
   defp default_changeset(params) do
     %__MODULE__{}
     |> cast(params, [:name, :body, :tenant_id])

@@ -28,7 +28,13 @@ defmodule ExTenantRepoProcessPgCrudTest do
       assert retrieved_commment.tenant_id == created_comment.tenant_id
     end
 
-    test "fails to create a post - when the tenant_id is not injected" do
+    test "creates a post when the tenant_id is in the process dictionary" do
+      assert_raise Postgrex.Error, fn ->
+        TenantRepo.create_post_without_cast("test-p-name", "test-p-body", Repo)
+      end
+    end
+
+    test "fails to create a post - when the tenant_id is passed in" do
       assert_raise Postgrex.Error, fn ->
         TenantRepoWithoutTenantId.create_post_without_tenant_id(
           "test-p-name",
