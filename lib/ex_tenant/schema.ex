@@ -1,6 +1,8 @@
 defmodule ExTenant.Schema do
   @moduledoc """
-    ##To use the Extenant.Schema in your schema modules follow this example
+
+    To use the Extenant.Schema in your schema modules follow this example
+    ---------------------------------------------------------------------
 
     - it injects the belongs_to relationship to the tenant
     - it also raises a compiler error if the `tenanted()` call was omitted
@@ -8,7 +10,7 @@ defmodule ExTenant.Schema do
 
     defmodule Post do
       use ExTenant.Schema
-      import Ecto.Changeset
+      use ExTenant.Changeset
 
       tenanted_schema "posts" do
         field(:name, :string)

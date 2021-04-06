@@ -3,7 +3,8 @@ defmodule ExTenant do
     Call the `use ExTenant` macro to inject all the required behaviour into your
     Application Repo module to enable all multi-tenancy functions.
 
-    ###Setup
+    Setup
+    -----
 
     In your application `Repo` file call the `use` macro as per this example
 
@@ -55,14 +56,17 @@ defmodule ExTenant do
 
       defp changeset(attrs) do
         %__MODULE__{}
-        |> cast_tenant(params, [:field1, :field1])
+        |> cast_tenanted(params, [:name, :body])
       end
     end
 
     NB: If the `tenant_id` is not set in the changeset, Repo.insert/update callbacks
     will raise a `Postgrex.Error` (not_null_violation)
 
-  ### Migrations
+    Migrations
+    ----------
+
+    - documentation to be added.
 
   """
 
