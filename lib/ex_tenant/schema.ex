@@ -8,17 +8,17 @@ defmodule ExTenant.Schema do
     - it also raises a compiler error if the `tenanted()` call was omitted
     - it works with the `tenant_id` field set in Config.exs
 
-    defmodule Post do
-      use ExTenant.Schema
-      use ExTenant.Changeset
+      defmodule Post do
+        use ExTenant.Schema
+        use ExTenant.Changeset
 
-      tenanted_schema "posts" do
-        field(:name, :string)
-        field(:body, :string)
+        tenanted_schema "posts" do
+          field(:name, :string)
+          field(:body, :string)
 
-        tenanted()
+          tenanted()
+        end
       end
-    end
     ...
   """
   require Ecto.Schema
