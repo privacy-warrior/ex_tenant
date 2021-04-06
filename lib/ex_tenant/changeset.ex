@@ -1,15 +1,5 @@
 defmodule ExTenant.Changeset do
-  @moduledoc false
-
-  @doc false
-  defmacro __using__(_opts) do
-    quote do
-      import ExTenant.Changeset
-      import Ecto.Changeset
-    end
-  end
-
-  @doc """
+  @moduledoc """
     ### cast_tenanted(changset, attrs, allowed)
 
     - injects the `tenant_id` key/atom into the allowed fields
@@ -21,7 +11,17 @@ defmodule ExTenant.Changeset do
 
     - if the `Repo` was not set in the Config.exs file
     - if the tenant_id in the process dictionary is nil
+  """
 
+  @doc false
+  defmacro __using__(_opts) do
+    quote do
+      import ExTenant.Changeset
+      import Ecto.Changeset
+    end
+  end
+
+  @doc """
     Basically call this like the standard `cast` function and the module
     macros will handle all the `tenant_id` injecting
 
