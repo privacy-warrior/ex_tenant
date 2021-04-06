@@ -24,7 +24,10 @@ defmodule ExTenant do
 
     - Repo.put_tenant_id(tenant_id)
 
-    to insert the `tenant_id` into the process dictionary.
+    To insert the `tenant_id` into the process dictionary.
+
+    Plug
+    ----
 
     (The next version of this library will provide a Plug that you can use.
     Watch this space!)
@@ -42,6 +45,8 @@ defmodule ExTenant do
     exceptions when the `Repo` was not configured correctly in `config.exs` and also
     if the `tenant_id` value is not set in the process_dictionary.
 
+    Ecto Schema/Changeset
+    ---------------------
 
     defmodule Post do
       use ExTenant.Schema
