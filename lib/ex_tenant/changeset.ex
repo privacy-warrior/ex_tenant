@@ -1,18 +1,21 @@
 defmodule ExTenant.Changeset do
   @moduledoc """
-    ##cast_tenanted(changset, attrs, allowed)
+
+    The function `cast_tenanted(changset, attrs, allowed)`
+    ------------------------------------------------------
 
     - injects the `tenant_id` key/atom into the allowed fields
     - retrieves the `tenant_id` value from the process dictionary
     - injects the %{"tenant_id" => tenant_id} into the attrs map
     - and then calls the standard Ecto.Changeset.cast function
 
-    ##An exception will be raised in the following two situations
+    ***An exception will be raised in the following two situations***
 
     - if the `Repo` was not set in the Config.exs file
     - if the tenant_id in the process dictionary is nil
 
-    ##Here is an example
+    Here is an example
+    ------------------
 
       defmodule Post do
         use ExTenant.Schema

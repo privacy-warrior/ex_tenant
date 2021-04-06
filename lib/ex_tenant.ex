@@ -48,22 +48,22 @@ defmodule ExTenant do
     Ecto Schema/Changeset
     ---------------------
 
-    defmodule Post do
-      use ExTenant.Schema
-      use ExTenant.Changeset
+      defmodule Post do
+        use ExTenant.Schema
+        use ExTenant.Changeset
 
-      tenanted_schema "posts" do
-        field(:name, :string)
-        field(:body, :string)
+        tenanted_schema "posts" do
+          field(:name, :string)
+          field(:body, :string)
 
-        tenanted()
+          tenanted()
+        end
+
+        defp changeset(attrs) do
+          %__MODULE__{}
+          |> cast_tenanted(params, [:name, :body])
+        end
       end
-
-      defp changeset(attrs) do
-        %__MODULE__{}
-        |> cast_tenanted(params, [:name, :body])
-      end
-    end
 
     NB: If the `tenant_id` is not set in the changeset, Repo.insert/update callbacks
     will raise a `Postgrex.Error` (not_null_violation)
