@@ -130,8 +130,4 @@ defmodule ExTenant do
       end
     end
   end
-
-  # defp inspect_query_data(operation, query, opts) do
-  #  Logger.debug "\n debug operation: #{inspect(operation)}, query: #{inspect(query)}, opts: #{inspect(opts)}"
-  # end
 end
