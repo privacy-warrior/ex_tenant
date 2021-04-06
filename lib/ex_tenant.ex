@@ -3,7 +3,7 @@ defmodule ExTenant do
     Call the `use ExTenant` macro to inject all the required behaviour into your
     Application Repo module to enable all multi-tenancy functions.
 
-    ###
+    ###Setup
 
     In your application `Repo` file call the `use` macro as per this example
 
@@ -35,16 +35,17 @@ defmodule ExTenant do
     needs to be inserted into the attributes to be inserted. The `inject_tenant_id`
     function that is now available on the `Repo` can be used to do this.
 
-      def changeset(attrs \\ :empty) do
-        attrs
-        |> Repo.inject_tenant_id()
-        |> default_changeset()
-      end
+    defmodule Post do
+      use ExTenant.Schema
+      use ExTenant.Changeset
 
-      defp default_changeset(attrs) do
+      ...
+
+      defp changeset(attrs) do
         %__MODULE__{}
-        |> cast(params, [:field1, :field1, :tenant_id])
+        |> cast(params, [:field1, :field1])
       end
+    end
 
     NB: If the `tenant_id` is not set in the changeset, Repo.insert/update callbacks
     will raise a `Postgrex.Error` (not_null_violation)

@@ -1,6 +1,6 @@
 defmodule ExTenant.Schema do
   @moduledoc """
-    ## to use the Extenant.Schema in your schema modules follow this example
+    ##To use the Extenant.Schema in your schema modules follow this example
 
     - it injects the belongs_to relationship to the tenant
     - it also raises a compiler error if the `tenanted()` call was omitted
