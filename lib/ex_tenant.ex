@@ -32,18 +32,30 @@ defmodule ExTenant do
     have a where clause applied to them with the `tenant_id` injected into the clause.
 
     In order to set the `tenant_id` on `insert` and `update` functions the tenant_id
-    needs to be inserted into the attributes to be inserted. The `inject_tenant_id`
-    function that is now available on the `Repo` can be used to do this.
+    needs to be inserted into the attributes to be inserted. The `tenanted_schema`
+    macro & the `tenanted()` function inserts the correct `belongs_to` tenanted foreign
+    key based relationship.
+
+    Further the `cast_tenant` method overloads the standard `Ecto.Changeset.cast` function
+    by injecting the `tenant_id` into the params and allowed keys. This function raises
+    exceptions when the `Repo` was not configured correctly in `config.exs` and also
+    if the `tenant_id` value is not set in the process_dictionary.
+
 
     defmodule Post do
       use ExTenant.Schema
       use ExTenant.Changeset
 
-      ...
+      tenanted_schema "posts" do
+        field(:name, :string)
+        field(:body, :string)
+
+        tenanted()
+      end
 
       defp changeset(attrs) do
         %__MODULE__{}
-        |> cast(params, [:field1, :field1])
+        |> cast_tenant(params, [:field1, :field1])
       end
     end
 

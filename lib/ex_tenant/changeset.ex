@@ -22,7 +22,7 @@ defmodule ExTenant.Changeset do
 
         defp changeset(attrs) do
           %__MODULE__{}
-          |> cast(params, [:field1, :field1])
+          |> cast_tenanted(params, [:field1, :field1])
         end
       end
 
