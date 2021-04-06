@@ -10,17 +10,31 @@ defmodule ExTenant.Changeset do
   end
 
   @doc """
-  TODO: document this!
-  """
-  defmacro cast_tenanted(changeset_or_data, params, allowed) do
-    caller = __CALLER__.module
+    ### cast_tenanted(changset, attrs, allowed)
 
-    quote bind_quoted: [
-            changeset_or_data: changeset_or_data,
-            params: params,
-            allowed: allowed,
-            calling_module: caller
-          ] do
+    - injects the `tenant_id` key/atom into the allowed fields
+    - retrieves the `tenant_id` value from the process dictionary
+    - injects the %{"tenant_id" => tenant_id} into the attrs map
+    - and then calls the standard Ecto.Changeset.cast function
+
+    ### An exception will be raised in the following two situations
+
+    - if the `Repo` was not set in the Config.exs file
+    - if the tenant_id in the process dictionary is nil
+
+    Basically call this like the standard `cast` function and the module
+    macros will handle all the `tenant_id` injecting
+
+    ### example
+
+    def changeset(attrs) do
+      %__MODULE__{}
+      |> cast_tenanted(attrs, [:name, :body])
+    end
+
+  """
+  defmacro cast_tenanted(changeset, params, allowed) do
+    quote bind_quoted: [cs: changeset, params: params, allowed: allowed] do
       # Cast supports both atom and string keys, ensure we're matching on both.
       allowed_param_keys =
         Enum.map(allowed, fn key ->
@@ -43,7 +57,7 @@ defmodule ExTenant.Changeset do
         |> convert_params_to_binary()
         |> inject_tenant_into_params(tenant_id)
 
-      Ecto.Changeset.cast(changeset_or_data, tenanted_params, tenanted_allowed)
+      Ecto.Changeset.cast(cs, tenanted_params, tenanted_allowed)
     end
   end
 
