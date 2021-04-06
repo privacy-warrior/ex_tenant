@@ -43,7 +43,8 @@ defmodule ExTenant.Changeset do
     Basically call this like the standard `cast` function and the module
     macros will handle all the `tenant_id` injecting
 
-    ### example
+    Example
+    -------
 
       def changeset(attrs) do
         %__MODULE__{}

@@ -41,12 +41,15 @@ defmodule ExTenant.Schema do
   end
 
   @doc """
-    injects belongs_to relationship to the tenant model see this example
+    injects belongs_to relationship to the tenant model
 
-    tenanted_schema "posts" do
-      field(:name, :string)
-      tenanted()
-    end
+    Example
+    -------
+
+      tenanted_schema "posts" do
+        field(:name, :string)
+        tenanted()
+      end
   """
   defmacro tenanted do
     owner = __CALLER__.module
