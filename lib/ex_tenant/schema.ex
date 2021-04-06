@@ -1,12 +1,15 @@
 defmodule ExTenant.Schema do
   @moduledoc """
 
-    To use the Extenant.Schema in your schema modules follow this example
-    ---------------------------------------------------------------------
+    To use the Extenant.Schema in your schema modules
+    -------------------------------------------------
 
     - it injects the belongs_to relationship to the tenant
     - it also raises a compiler error if the `tenanted()` call was omitted
     - it works with the `tenant_id` field set in Config.exs
+
+    Here is an example
+    ------------------
 
       defmodule Post do
         use ExTenant.Schema
@@ -19,7 +22,7 @@ defmodule ExTenant.Schema do
           tenanted()
         end
       end
-    ...
+
   """
   require Ecto.Schema
 
