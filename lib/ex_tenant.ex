@@ -44,8 +44,10 @@ defmodule ExTenant do
     Plug
     ----
 
-    (The next version of this library will provide a Plug that you can use.
-    Watch this space!)
+    - An example of how a Plug can be used to insert the tenant_id into the process dictionary
+
+    - Take a look at the module `ExTenant.SubdomainPlug`
+
 
     From here all your Repo callbacks (Repo.get/Repo.one/Repo.all etc) will
     have a where clause applied to them with the `tenant_id` injected into the clause.

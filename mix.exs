@@ -4,7 +4,7 @@ defmodule ExTenant.MixProject do
   def project do
     [
       app: :ex_tenant,
-      version: "0.1.7",
+      version: "0.1.8",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
