@@ -81,6 +81,7 @@ config :ex_tenant, ExTenant.Test.Support.Repos.MyTestRepo,
 #
 config :ex_tenant,
   tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo,
-  tenanted_field: "tenant_id"
+  tenanted_field: "tenant_id",
+  get_tenant_from_subdomain_func: &ExTenant.TenantUtils.get_tenant_from_subdomain/1
 
 config :logger, level: :warn
