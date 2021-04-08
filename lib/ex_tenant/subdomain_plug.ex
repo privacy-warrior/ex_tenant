@@ -1,5 +1,26 @@
 defmodule ExTenant.SubdomainPlug do
   @moduledoc """
+
+    -
+
+    Example
+    -------
+
+    -
+
+
+      def call(conn, _labels) do
+        repo = Application.get_env(:ex_tenant, :repo)
+
+        conn
+        |> url_value(:host)
+        |> ExTenant.TenantUtils.sub_domain()
+        |> ExTenant.TenantUtils.retrieve_tenant_from_subdomain()
+        |> repo.put_tenant_id()
+
+        conn
+      end
+
   """
   require Logger
 

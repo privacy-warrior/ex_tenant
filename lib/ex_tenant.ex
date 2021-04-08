@@ -14,9 +14,11 @@ defmodule ExTenant do
 
       config :ex_tenant,
         tenant_repo: MyAppRepo,
-        tenanted_field: "tenant_id"
+        tenanted_field: "tenant_id",
+        get_tenant_from_subdomain_func: &your_application_get_tenant_from_subdomain_function/1
 
-    If the `repo` is not configured ExTenant will raise an exception.
+    - If the `repo` is not configured ExTenant will raise an exception.
+    - the `get_tenant_from_subdomain_func` is optional if you decide to use the Plug - see example below
 
     Repo
     ----
