@@ -55,7 +55,10 @@ defmodule ExTenant.Schema do
     owner = __CALLER__.module
 
     quote do
-      Ecto.Schema.belongs_to(:tenant, unquote(owner), references: :tenant_id)
+      tenanted_field = ExTenant.Utils.tenanted_field()
+      tenant_id_field = String.to_existing_atom(tenanted_field)
+
+      Ecto.Schema.belongs_to(:tenant, unquote(owner), references: tenant_id_field)
     end
   end
 

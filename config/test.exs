@@ -79,6 +79,8 @@ config :ex_tenant, ExTenant.Test.Support.Repos.MyTestRepo,
 #
 # AND we also need to doc and fix the `tenanted_field` from here!
 #
-config :ex_tenant, tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo
+config :ex_tenant,
+  tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo,
+  tenanted_field: "tenant_id"
 
 config :logger, level: :warn

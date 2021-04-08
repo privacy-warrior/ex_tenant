@@ -87,8 +87,11 @@ defmodule ExTenant.Changeset do
 
   @doc false
   def inject_tenant_into_params(params, tenant_id) do
+    tenanted_field = ExTenant.Utils.tenanted_field()
+    tenant_field = "#{tenanted_field}"
+
     params
-    |> Map.put("tenant_id", tenant_id)
+    |> Map.put(tenant_field, tenant_id)
   end
 
   @doc false

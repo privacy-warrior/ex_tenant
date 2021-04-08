@@ -55,8 +55,9 @@ defmodule ExTenant.Actions do
     rescue
       e in Postgrex.Error ->
         {:error, Postgrex.Error.message(e)}
-        # e in Mariaex.Error ->
-        #  {:error, Mariaex.Error.message(e)}
+
+      e in Mariaex.Error ->
+        {:error, MyXQL.Error.message(e)}
     end
   end
 end

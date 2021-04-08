@@ -6,6 +6,21 @@ defmodule ExTenant do
     Setup
     -----
 
+    In the application `Config` file the `repo` and `tenanted_field` settings need to be configured.
+    ExTenant will default the tenanted_field setting to be `tenant_id`. If the `repo` is not configured
+    ExTenant will raise an exception.
+
+    Config
+    ------
+
+      config :ex_tenant,
+        tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo,
+        tenanted_field: "tenant_id"
+
+
+    Repo
+    ----
+
     In your application `Repo` file call the `use` macro as per this example
 
       def YourApplication.Repo do
@@ -90,22 +105,31 @@ defmodule ExTenant do
 
       generate_put_tenant_function(unquote(tenant_key))
       generate_get_tenant_function(unquote(tenant_key))
-      generate_default_options_callback()
+      generate_default_options_callback(unquote(tenanted_field))
       generate_inject_tenant_id_callback(unquote(tenanted_field))
-      generate_prepare_query_callback()
+      generate_prepare_query_callback(unquote(tenanted_field))
     end
   end
 
   @doc false
-  defmacro generate_prepare_query_callback() do
+  defmacro generate_prepare_query_callback(tenanted_field) do
     quote do
       def prepare_query(operation, query, opts) do
+        tenant_field = String.to_existing_atom(unquote(tenanted_field))
+
         cond do
           opts[:skip_tenant_id] || opts[:schema_migration] ->
             {query, opts}
 
-          tenant_id = opts[:tenant_id] ->
-            {Ecto.Query.where(query, tenant_id: ^tenant_id), opts}
+          tenant_id = opts[tenant_field] ->
+            filtered_where =
+              query
+              |> Ecto.Query.where(
+                [q],
+                inject_where(q, tenant_field, tenant_id, :==)
+              )
+
+            {filtered_where, opts}
 
           true ->
             raise ExTenant.TenantNotSetError
@@ -127,10 +151,15 @@ defmodule ExTenant do
   end
 
   @doc false
-  defmacro generate_default_options_callback() do
+  defmacro generate_default_options_callback(tenanted_field) do
     quote do
       def default_options(_operation) do
-        [tenant_id: get_tenant_id()]
+        [
+          {
+            String.to_existing_atom(unquote(tenanted_field)),
+            get_tenant_id()
+          }
+        ]
       end
     end
   end
@@ -151,5 +180,14 @@ defmodule ExTenant do
         Process.get(unquote(tenant_key))
       end
     end
+  end
+
+  @doc false
+  defmacro inject_where(t, f, v, sign) do
+    {sign, [context: Elixir, import: Kernel],
+     [
+       {:field, [], [t, {:^, [], [f]}]},
+       {:^, [], [v]}
+     ]}
   end
 end
