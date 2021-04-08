@@ -54,17 +54,6 @@ defmodule ExTenant.Changeset do
   """
   defmacro cast_tenanted(changeset, params, allowed) do
     quote bind_quoted: [cs: changeset, params: params, allowed: allowed] do
-      # Cast supports both atom and string keys, ensure we're matching on both.
-      allowed_param_keys =
-        Enum.map(allowed, fn key ->
-          case key do
-            key when is_binary(key) -> key
-            key when is_atom(key) -> Atom.to_string(key)
-          end
-        end)
-
-      tenanted_param_keys = allowed_param_keys ++ "tenant_id"
-
       tenanted_allowed =
         [:tenant_id, allowed]
         |> List.flatten()
