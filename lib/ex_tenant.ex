@@ -7,16 +7,16 @@ defmodule ExTenant do
     -----
 
     In the application `Config` file the `repo` and `tenanted_field` settings need to be configured.
-    ExTenant will default the tenanted_field setting to be `tenant_id`. If the `repo` is not configured
-    ExTenant will raise an exception.
+    ExTenant will default the tenanted_field setting to be `tenant_id`.
 
     Config
     ------
 
       config :ex_tenant,
-        tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo,
+        tenant_repo: MyAppRepo,
         tenanted_field: "tenant_id"
 
+    If the `repo` is not configured ExTenant will raise an exception.
 
     Repo
     ----
