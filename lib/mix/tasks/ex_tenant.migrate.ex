@@ -6,7 +6,7 @@ defmodule Mix.Tasks.ExTenant.Migrate do
   alias ExTenant.Actions
 
   @impl true
-  def run(direction, migrator \\ &Actions.migrate_tenanted/2) do
-    migrator.(direction, [])
+  def run(args, migrator \\ &Actions.migrate_tenanted/2) do
+    migrator.(args, :up)
   end
 end

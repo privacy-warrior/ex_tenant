@@ -3,6 +3,7 @@ defmodule ExTenant.Actions do
     Run the tenanted migrations
   """
   import ExTenant.PathHelper
+  alias Mix.Ecto
 
   @doc """
     Apply tenant migrations to a tenant with given strategy, in given direction.
@@ -23,23 +24,28 @@ defmodule ExTenant.Actions do
       Can be any of `Logger.level/0` values or `false`.
 
   """
-  def migrate_tenanted(direction \\ :up, opts \\ []) do
+  def migrate_tenanted(args, direction) do
     repo =
-      []
-      |> Mix.Ecto.parse_repo()
+      args
+      |> Ecto.parse_repo()
       |> List.first()
+
+    # for now!
+    opts = []
 
     opts =
       if opts[:to] || opts[:step] || opts[:all],
         do: opts,
         else: Keyword.put(opts, :all, true)
 
-    migrate_and_return_status(repo, direction, opts)
+    migrate_and_return_status(repo, args, direction, opts)
   end
 
   # ------ private functions ------ #
 
-  defp migrate_and_return_status(repo, direction, opts) do
+  defp migrate_and_return_status(repo, args, direction, opts) do
+    Ecto.ensure_repo(repo, args)
+
     {status, versions} =
       handle_database_exceptions(fn ->
         Ecto.Migrator.run(
