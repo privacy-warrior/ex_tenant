@@ -4,7 +4,7 @@ defmodule ExTenant.MixProject do
   def project do
     [
       app: :ex_tenant,
-      version: "0.1.9",
+      version: "0.2.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
@@ -24,14 +24,14 @@ defmodule ExTenant.MixProject do
     ]
   end
 
-  defp project_url, do: "https://github.com/elixir_garage/ex_tenant"
+  defp project_url, do: "https://github.com/elixir-garage/ex_tenant"
 
   defp package do
     [
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Elixirgarage"],
       licenses: ["Apache License 2.0"],
-      links: %{"GitHub" => "https://github.com/elixir_garage/ex_tenant"}
+      links: %{"GitHub" => "https://github.com/elixir-garage/ex_tenant"}
     ]
   end
 
