@@ -12,7 +12,6 @@ defmodule ExTenant.Actions do
 
   ## Paramaters
 
-    - *repo*: the repository we are running the migrations for
     - *direction*: defaults to `:up`
 
   ## Options
@@ -30,15 +29,6 @@ defmodule ExTenant.Actions do
       |> Mix.Ecto.parse_repo()
       |> List.first()
 
-    opts =
-      if opts[:to] || opts[:step] || opts[:all],
-        do: opts,
-        else: Keyword.put(opts, :all, true)
-
-    migrate_and_return_status(repo, direction, opts)
-  end
-
-  def migrate_tenanted(repo, direction \\ :up, opts \\ []) do
     opts =
       if opts[:to] || opts[:step] || opts[:all],
         do: opts,
