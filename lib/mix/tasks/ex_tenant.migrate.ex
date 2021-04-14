@@ -7,6 +7,6 @@ defmodule Mix.Tasks.ExTenant.Migrate do
 
   @impl true
   def run(direction, migrator \\ &Actions.migrate_tenanted/2) do
-    migrator.(direction)
+    migrator.(direction, [])
   end
 end
