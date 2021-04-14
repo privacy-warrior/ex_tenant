@@ -3,6 +3,7 @@ defmodule ExTenant.Actions do
     Run the tenanted migrations
   """
   import ExTenant.PathHelper
+  alias Ecto.Migrator
   alias Mix.Ecto
 
   @doc """
@@ -48,7 +49,7 @@ defmodule ExTenant.Actions do
 
     {status, versions} =
       handle_database_exceptions(fn ->
-        Ecto.Migrator.run(
+        Migrator.run(
           repo,
           tenanted_migrations_path(repo),
           direction,
