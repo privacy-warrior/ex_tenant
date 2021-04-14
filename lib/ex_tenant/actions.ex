@@ -24,6 +24,20 @@ defmodule ExTenant.Actions do
       Can be any of `Logger.level/0` values or `false`.
 
   """
+  def migrate_tenanted(direction \\ :up, opts \\ []) do
+    repo =
+      []
+      |> Mix.Ecto.parse_repo()
+      |> List.first()
+
+    opts =
+      if opts[:to] || opts[:step] || opts[:all],
+        do: opts,
+        else: Keyword.put(opts, :all, true)
+
+    migrate_and_return_status(repo, direction, opts)
+  end
+
   def migrate_tenanted(repo, direction \\ :up, opts \\ []) do
     opts =
       if opts[:to] || opts[:step] || opts[:all],
