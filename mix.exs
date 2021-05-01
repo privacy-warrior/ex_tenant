@@ -57,9 +57,9 @@ defmodule ExTenant.MixProject do
   defp deps do
     [
       {:ecto, "~> 3.5"},
-      {:postgrex, "~> 0.15.8"},
-      {:ecto_sql, "~> 3.5"},
-      {:myxql, "~> 0.4.0"},
+      {:postgrex, "~> 0.15.8", only: :test},
+      {:ecto_sql, "~> 3.5", only: :test},
+      {:myxql, "~> 0.4.0", only: :test},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false}
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
