@@ -4,6 +4,7 @@ defmodule Mix.Tasks.ExTenant.Migrate do
   """
   use Mix.Task
   import Mix.Ecto
+  import IO.ANSI, only: [yellow: 0, green: 0]
   import ExTenant.PathHelper
 
   @aliases [
@@ -47,7 +48,7 @@ defmodule Mix.Tasks.ExTenant.Migrate do
   """
 
   @impl true
-  def run(args, migrator \\ &Ecto.Migrator.run/4) do
+  def run(args) do
     repos = parse_repo(args)
 
     {opts, _} = OptionParser.parse!(args, strict: @switches, aliases: @aliases)
@@ -66,6 +67,9 @@ defmodule Mix.Tasks.ExTenant.Migrate do
     # to restart those apps if migrated.
     {:ok, _} = Application.ensure_all_started(:ecto_sql)
 
+    # Mix.Task.run("app.start", [])
+    Mix.shell().info(yellow() <> "Running Tenanted Migrations")
+
     for repo <- repos do
       ensure_repo(repo, args)
       # paths = ensure_migrations_paths(repo, opts)
@@ -74,22 +78,13 @@ defmodule Mix.Tasks.ExTenant.Migrate do
 
       pool = repo.config[:pool]
 
-      fun =
-        if Code.ensure_loaded?(pool) and function_exported?(pool, :unboxed_run, 2) do
-          &pool.unboxed_run(&1, fn -> migrator.(&1, paths, :up, opts) end)
-        else
-          &migrator.(&1, paths, :up, opts)
-        end
-
-      case Ecto.Migrator.with_repo(repo, fun, [mode: :temporary] ++ opts) do
-        {:ok, _migrated, _apps} ->
-          :ok
-
-        {:error, error} ->
-          Mix.raise("Could not start repo #{inspect(repo)}, error: #{inspect(error)}")
-      end
+      ExTenant.Migrator.run_tenanted_migrations(repo, pool, opts, paths)
     end
+
+    Mix.shell().info(green() <> "Completed Tenanted Migrations")
 
     :ok
   end
+
+  # --- private functions --- #
 end
