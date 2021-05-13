@@ -1,9 +1,12 @@
 defmodule ExTenant.Actions do
-  use Mix.Task
-  import Mix.Ecto
+  @moduledoc """
+    Run the tenanted migrations
+  """
   import ExTenant.PathHelper
-
-  @shortdoc "Runs the tenanted migrations"
+  use Mix.Task
+  # alias Ecto.Migrator
+  import Mix.Ecto
+  # alias Logger.App
 
   @aliases [
     n: :step,
@@ -25,83 +28,28 @@ defmodule ExTenant.Actions do
     migrations_path: :keep
   ]
 
-  @moduledoc """
-  Runs the pending migrations for the given repository.
+  @doc """
+    Apply tenant migrations to a tenant with given strategy, in given direction.
 
-  Migrations are expected at "priv/YOUR_REPO/migrations" directory
-  of the current application, where "YOUR_REPO" is the last segment
-  in your repository name. For example, the repository `MyApp.Repo`
-  will use "priv/repo/migrations". The repository `Whatever.MyRepo`
-  will use "priv/my_repo/migrations".
+  A direction can be given, as the third parameter, which defaults to `:up`
+  A strategy can be given as an option, and defaults to `:all`
 
-  You can configure a repository to use another directory by specifying
-  the `:priv` key under the repository configuration. The "migrations"
-  part will be automatically appended to it. For instance, to use
-  "priv/custom_repo/migrations":
+  ## Paramaters
 
-      config :my_app, MyApp.Repo, priv: "priv/custom_repo"
+    - *direction*: defaults to `:up`
 
-  This task runs all pending migrations by default. To migrate up to a
-  specific version number, supply `--to version_number`. To migrate a
-  specific number of times, use `--step n`.
+  ## Options
 
-  The repositories to migrate are the ones specified under the
-  `:ecto_repos` option in the current app configuration. However,
-  if the `-r` option is given, it replaces the `:ecto_repos` config.
+    * `:all` - runs all available if `true`
+    * `:step` - runs the specific number of migrations
+    * `:to` - runs all until the supplied version is reached
+    * `:log` - the level to use for logging. Defaults to `:info`.
+      Can be any of `Logger.level/0` values or `false`.
 
-  Since Ecto tasks can only be executed once, if you need to migrate
-  multiple repositories, set `:ecto_repos` accordingly or pass the `-r`
-  flag multiple times.
-
-  If a repository has not yet been started, one will be started outside
-  your application supervision tree and shutdown afterwards.
-
-  ## Examples
-
-      mix ecto.migrate
-      mix ecto.migrate -r Custom.Repo
-
-      mix ecto.migrate -n 3
-      mix ecto.migrate --step 3
-
-      mix ecto.migrate --to 20080906120000
-
-  ## Command line options
-
-    * `-r`, `--repo` - the repo to migrate
-
-    * `--all` - run all pending migrations
-
-    * `--step`, `-n` - run n number of pending migrations
-
-    * `--to` - run all migrations up to and including version
-
-    * `--quiet` - do not log migration commands
-
-    * `--prefix` - the prefix to run migrations on
-
-    * `--pool-size` - the pool size if the repository is started only for the task (defaults to 2)
-
-    * `--log-sql` - log the raw sql migrations are running
-
-    * `--strict-version-order` - abort when applying a migration with old timestamp
-
-    * `--no-compile` - does not compile applications before migrating
-
-    * `--no-deps-check` - does not check dependencies before migrating
-
-    * `--migrations-path` - the path to load the migrations from, defaults to
-      `"priv/repo/migrations"`. This option may be given multiple times in which case the migrations
-      are loaded from all the given directories and sorted as if they were in the same one.
-
-      Note, if you have migrations paths e.g. `a/` and `b/`, and run
-      `mix ecto.migrate --migrations-path a/`, the latest migrations from `a/` will be run (even
-      if `b/` contains the overall latest migrations.)
   """
-
-  @impl true
-  def run(args, migrator \\ &Ecto.Migrator.run/4) do
+  def migrate_tenanted(args, migrator \\ &Ecto.Migrator.run/4) do
     repos = parse_repo(args)
+
     {opts, _} = OptionParser.parse!(args, strict: @switches, aliases: @aliases)
 
     opts =
@@ -120,6 +68,8 @@ defmodule ExTenant.Actions do
 
     for repo <- repos do
       ensure_repo(repo, args)
+      # paths = ensure_migrations_paths(repo, opts)
+
       paths = [tenanted_migrations_path(repo)]
 
       pool = repo.config[:pool]
@@ -142,4 +92,115 @@ defmodule ExTenant.Actions do
 
     :ok
   end
-end
+
+  # ---- remove once the new version is tested to work ----#
+
+  # def migrate_tenanted_deprecated(args, direction) do
+  #  repo =
+  #    args
+  #    |> Ecto.parse_repo()
+  #    |> List.first()
+  #
+  #  # for now!
+  #  opts = []
+  #
+  #  opts =
+  #    if opts[:to] || opts[:step] || opts[:all],
+  #      do: opts,
+  #      else: Keyword.put(opts, :all, true)
+  #
+  #  migrate_and_return_status(repo, args, direction, opts)
+  # end
+
+  # ------ private functions ------ #
+
+  # defp migrate_and_return_status(repo, args, direction, opts) do
+  #  Ecto.ensure_repo(repo, args)
+  #
+  #  {:ok, pid, apps} = ensure_started(repo, opts)
+  #
+  #  {status, versions} =
+  #    handle_database_exceptions(fn ->
+  #      Migrator.run(
+  #        repo,
+  #        tenanted_migrations_path(repo),
+  #        direction,
+  #        opts
+  #      )
+  #    end)
+  #
+  #  pid && repo.stop()
+  #  restart_apps_if_migrated(apps)
+  #
+  #  {status, versions}
+  # end
+
+  # @spec ensure_started(Ecto.Repo.t(), Keyword.t()) :: {:ok, pid | nil, [atom]}
+  # def ensure_started(repo, opts) do
+  #  {:ok, started} = Application.ensure_all_started(:ecto_sql)
+  #
+  #  # If we starting EctoSQL just now, assume
+  #  # logger has not been properly booted yet.
+  #  if :ecto_sql in started && Process.whereis(Logger) do
+  #    backends = Application.get_env(:logger, :backends, [])
+  #
+  #    try do
+  #      App.stop()
+  #      Application.put_env(:logger, :backends, [:console])
+  #      :ok = App.start()
+  #    after
+  #      Application.put_env(:logger, :backends, backends)
+  #    end
+  #  end
+  #
+  #  config = repo.config()
+  #  adapter = repo.__adapter__()
+  #
+  #  {:ok, apps} = adapter.ensure_all_started(config, :temporary)
+  #  pool_size = Keyword.get(opts, :pool_size, 2)
+  #
+  #  case repo.start_link(pool_size: pool_size) do
+  #    {:ok, pid} ->
+  #      {:ok, pid, apps}
+  #
+  #    {:error, {:already_started, _pid}} ->
+  #      {:ok, nil, apps}
+  #
+  #    {:error, error} ->
+  #      Mix.raise("Could not start repo #{inspect(repo)}, error: #{inspect(error)}")
+  #  end
+  # end
+
+  # @doc """
+  # Restarts the app if there was any migration command.
+  # """
+  # @spec restart_apps_if_migrated([atom]) :: :ok
+  # def restart_apps_if_migrated(apps) do
+  #  # Silence the logger to avoid application down messages.
+  #  Logger.remove_backend(:console)
+  #
+  #  for app <- Enum.reverse(apps) do
+  #    Application.stop(app)
+  #  end
+  #
+  #  for app <- apps do
+  #    Application.ensure_all_started(app)
+  #  end
+  #
+  #  :ok
+  # after
+  #  Logger.add_backend(:console, flush: true)
+  # end
+
+  # defp handle_database_exceptions(fun) do
+  #  try do
+  #    {:ok, fun.()}
+  #  rescue
+  #    e in Postgrex.Error ->
+  #      {:error, Postgrex.Error.message(e)}
+  #
+  #    e in Mariaex.Error ->
+  #      {:error, MyXQL.Error.message(e)}
+  #  end
+  # end
+#end

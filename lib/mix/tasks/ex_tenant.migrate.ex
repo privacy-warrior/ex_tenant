@@ -7,6 +7,6 @@ defmodule Mix.Tasks.ExTenant.Migrate do
 
   @impl true
   def run(args, migrator \\ &Actions.migrate_tenanted/2) do
-    migrator.(args, :up)
+    migrator.(args)
   end
 end
