@@ -1,7 +1,6 @@
 defmodule ExTenant.Actions do
   use Mix.Task
   import Mix.Ecto
-  import Mix.EctoSQL
   import ExTenant.PathHelper
 
   @shortdoc "Runs the tenanted migrations"
