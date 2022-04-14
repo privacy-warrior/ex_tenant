@@ -1,14 +1,14 @@
 Code.compiler_options(ignore_module_conflict: true)
 
-# postgres
-Mix.Task.run("ecto.drop", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Postgres.PgTestRepo"])
-Mix.Task.run("ecto.create", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Postgres.PgTestRepo"])
-Mix.Task.run("ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Postgres.PgTestRepo"])
-
 # mysql
 Mix.Task.run("ecto.drop", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Mysql.MyTestRepo"])
 Mix.Task.run("ecto.create", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Mysql.MyTestRepo"])
 Mix.Task.run("ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Mysql.MyTestRepo"])
+
+# postgres
+Mix.Task.run("ecto.drop", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Postgres.PgTestRepo"])
+Mix.Task.run("ecto.create", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Postgres.PgTestRepo"])
+Mix.Task.run("ecto.migrate", ["quiet", "-r", "ExTenant.Test.Support.Schemas.Postgres.PgTestRepo"])
 
 #
 # PG -------------------- START
