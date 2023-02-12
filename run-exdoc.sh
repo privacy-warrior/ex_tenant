@@ -1,1 +1,1 @@
-ex_doc "Ex_Tenant" "0.2.2" path/to/project/ebin -m "ExTenant" -u "https://github.com/privacy-warrior/ex_tenant"
+ex_doc "Ex_Tenant" "0.2.4" path/to/project/ebin -m "ExTenant" -u "https://github.com/privacy-warrior/ex_tenant"

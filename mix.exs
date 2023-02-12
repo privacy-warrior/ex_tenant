@@ -4,8 +4,8 @@ defmodule ExTenant.MixProject do
   def project do
     [
       app: :ex_tenant,
-      version: "0.2.3",
-      elixir: "~> 1.11",
+      version: "0.2.4",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
       start_permanent: Mix.env() == :prod,
@@ -56,12 +56,11 @@ defmodule ExTenant.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 3.5"},
-      {:postgrex, "~> 0.15.8", only: :test},
-      {:ecto_sql, "~> 3.7.2"},
-      {:myxql, "~> 0.6.1", only: :test},
-      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ecto, "~> 3.9.4"},
+      {:postgrex, "~> 0.16.5", only: :test},
+      {:ecto_sql, "~> 3.9.2"},
+      {:myxql, "~> 0.6.3", only: :test},
+      {:ex_doc, "~> 0.29.1", only: :dev, runtime: false}
     ]
   end
 end
