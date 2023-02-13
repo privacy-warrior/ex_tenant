@@ -9,7 +9,7 @@
 ```elixir
 def deps do
   [
-    {:ex_tenant, "~> 0.1.1"}
+    {:ex_tenant, "~> 0.2.4"}
   ]
 end
 ```
