@@ -29,7 +29,7 @@ defmodule ExTenant.MixProject do
   defp package do
     [
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
-      maintainers: ["Elixirgarage"],
+      maintainers: ["Privacy Warrior"],
       licenses: ["Apache License 2.0"],
       links: %{"GitHub" => "https://github.com/privacy-warrior/ex_tenant"}
     ]

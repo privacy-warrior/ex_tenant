@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 #
 # since we are not in a module an anonymous function will do.. (we need a fallback empty string)
 #
@@ -80,6 +80,7 @@ config :ex_tenant, ExTenant.Test.Support.Repos.MyTestRepo,
 # AND we also need to doc and fix the `tenanted_field` from here!
 #
 config :ex_tenant,
+  ecto_repos: [ExTenant.Test.Support.Schemas.Postgres.PgTestRepo],
   tenant_repo: ExTenant.Test.Support.Repos.PgTestRepo,
   tenanted_field: "tenant_id",
   get_tenant_from_subdomain_func: &ExTenant.TenantUtils.get_tenant_from_subdomain/1
